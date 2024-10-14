@@ -1,0 +1,10 @@
+Comentario: // Este es un comentario de línea simple
+Comentario: /* 
+   Este es un comentario
+   de varias líneas 
+*/
+Texto de salida: printf("Hola, Mundo!")
+Texto de salida: puts("Bienvenido a Flex!")
+Comentario: // Comentario al final de una línea
+Comentario: /* Otro comentario con contenido especial: @#$%^& */
+Texto de salida: printf("Prueba de lexer en C.")

@@ -1,0 +1,17 @@
+// Comentario de una sola línea
+
+/* 
+   Comentario de varias líneas 
+   que incluye saltos de línea.
+*/
+
+printf("Hola, Mundo!");  // Imprime un saludo
+
+puts("Probando Flex Lexer."); 
+
+int numero = 42;  // Este token será ignorado
+
+/* Otro comentario que explica 
+   código complejo */
+printf("Otra prueba con printf.");
+puts("Fin del análisis.");

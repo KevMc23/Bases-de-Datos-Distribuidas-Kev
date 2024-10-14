@@ -1,0 +1,15 @@
+Pronombre: Yo
+Verbo de análisis: analizar
+Conjunción: y
+Verbo de análisis: organizar
+Adjetivo positivo: fantástica
+Conjunción: aunque
+Pronombre: Nosotros
+Verbo de análisis: comparar
+Conjunción: Sin embargo
+Pronombre: tú
+Pronombre: Ella
+Adjetivo positivo: excelente
+Conjunción: pero
+Preposición: con
+Conjunción: y

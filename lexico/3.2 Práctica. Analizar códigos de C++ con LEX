@@ -1,0 +1,88 @@
+%{
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int comment_count = 0;
+%}
+
+%%
+
+/* Palabras reservadas de C++ */
+"auto"|"break"|"case"|"char"|"const"|"continue"|"default"|"do"|"double"|"else"|"enum"|"extern"|"float"|"for"|"goto"|"if"|"int"|"long"|"register"|"return"|"short"|"signed"|"sizeof"|"static"|"struct"|"switch"|"typedef"|"union"|"unsigned"|"void"|"volatile"|"while"|"class"|"public"|"private"|"protected"|"friend"|"this"|"new"|"delete"|"try"|"catch"|"throw"|"template"|"typename"|"inline"|"namespace"|"using" {
+    printf("Palabra reservada: %s\n", yytext);
+}
+
+/* Comentarios */
+"//".* {
+    comment_count++;
+    printf("Comentario de una línea: %s\n", yytext);
+}
+"/*"([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*"*"+"/" {
+    comment_count++;
+    printf("Comentario de múltiples líneas\n");
+}
+
+/* Identificadores (variables) */
+[a-zA-Z_][a-zA-Z0-9_]* {
+    printf("Nombre de variable: %s\n", yytext);
+}
+
+/* Constantes numéricas */
+[0-9]+ {
+    printf("Constante numérica: %s\n", yytext);
+}
+
+/* Operadores aritméticos */
+"+"|"-"|"*"|"/"|"%" {
+    printf("Operador aritmético: %s\n", yytext);
+}
+
+/* Operadores lógicos */
+"&&"|"||"|"!" {
+    printf("Operador lógico: %s\n", yytext);
+}
+
+/* Símbolos especiales */
+"(" | ")" | "{" | "}" | "[" | "]" | ";" | "," | "." {
+    printf("Símbolo especial: %s\n", yytext);
+}
+
+/* Ignorar espacios, tabs y nuevas líneas */
+[ \t\n]+ ;
+
+%%
+
+int main(int argc, char **argv) {
+    if (argc < 2) {
+        fprintf(stderr, "Uso: %s <archivo_entrada>\n", argv[0]);
+        exit(1);
+    }
+
+    // Abrir el archivo especificado en la línea de comandos
+    yyin = fopen(argv[1], "r");
+    if (!yyin) {
+        perror("No se pudo abrir el archivo");
+        exit(1);
+    }
+
+    // Ejecutar el analizador léxico
+    yylex();
+
+    // Cerrar el archivo
+    fclose(yyin);
+
+    // Mostrar el conteo de comentarios
+    printf("Total de comentarios encontrados: %d\n", comment_count);
+
+    return 0;
+}
+
+
+
+
+Compilar 
+
+flex lexer.l
+gcc lex.yy.c -o lexer -lfl
+./lexer archivo.cpp

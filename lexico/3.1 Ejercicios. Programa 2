@@ -1,0 +1,50 @@
+%{
+#include <stdio.h>
+#include <stdlib.h>
+
+extern FILE *yyin;
+%}
+
+IZQ [a-zA-Z0-9._%+-]
+DER [a-zA-Z0-9.-]
+ARROBA @
+DOMINIO \.[a-zA-Z]{2,}
+
+%%
+
+{IZQ}+{ARROBA}{DER}+{DOMINIO} {
+    printf("Correo electrónico válido: %s\n", yytext);
+}
+.|\n    /* Ignorar otros caracteres */
+
+%%
+
+int main(int argc, char **argv) {
+    if (argc < 2) {
+        fprintf(stderr, "Uso: %s <archivo_entrada>\n", argv[0]);
+        exit(1);
+    }
+
+    // Abrir el archivo especificado en la línea de comandos
+    yyin = fopen(argv[1], "r");
+    if (!yyin) {
+        perror("No se pudo abrir el archivo");
+        exit(1);
+    }
+
+    // Ejecutar el analizador léxico
+    yylex();
+
+    // Cerrar el archivo
+    fclose(yyin);
+
+    return 0;
+}
+
+    return 0;
+}
+
+Compilar 
+flex lexer.l
+gcc lex.yy.c -o lexer -lfl
+./lexer archivo.txt
